@@ -1,0 +1,14 @@
+[Unit]
+Description=socketmost commander
+After=socketmost.service
+
+[Service]
+ExecStartPre=/bin/sleep 1
+ExecStart=<venv_path>/python3 <path_to_project>/py-socketmost-client.py --start
+Restart=always
+ExecStop=ps -ef | grep 'py-socketmost-client.py' | grep -v grep | awk '{print $2}' | xargs -r kill -9
+WorkingDirectory=<path_to_project>
+User=root
+
+[Install]
+WantedBy=default.target
